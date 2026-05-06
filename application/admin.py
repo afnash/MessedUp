@@ -42,7 +42,6 @@ class ApplicationAdmin(admin.ModelAdmin):
         "profile",
         "get_applicant_name",
         "student_id",
-        "phone_number",
         "department",
         "semester",
         "mess_no",
@@ -71,7 +70,6 @@ class ApplicationAdmin(admin.ModelAdmin):
         "mess_no",
         "created_at",
         "student_id",
-        "phone_number",
     ]
     actions = [
         "accept_application",
@@ -81,7 +79,7 @@ class ApplicationAdmin(admin.ModelAdmin):
         "dismiss_mess_assistant",
     ]
     autocomplete_fields = ("messcuts",)
-    exclude = ("attendance",)
+    exclude = ("attendance", "phone_number")
 
     def profile(self, obj):
         return mark_safe(
@@ -200,7 +198,6 @@ class AcceptedApplicationAdmin(admin.ModelAdmin):
         "profile",
         "get_applicant_name",
         "student_id",
-        "phone_number",
         "department",
         "semester",
         "mess_no",
@@ -228,7 +225,6 @@ class AcceptedApplicationAdmin(admin.ModelAdmin):
         "mess_no",
         "created_at",
         "student_id",
-        "phone_number",
     ]
     actions = [
         "accept_application",
@@ -242,7 +238,7 @@ class AcceptedApplicationAdmin(admin.ModelAdmin):
         "cancel_outmess",
     ]
     autocomplete_fields = ("messcuts",)
-    exclude = ("attendance",)
+    exclude = ("attendance", "phone_number")
 
 
     def profile(self, obj):
