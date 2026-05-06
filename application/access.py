@@ -1,7 +1,7 @@
 from .models import Application
 
 
-PAYMENT_BLOCKED_HOSTELS = {"sahara"}
+PAYMENT_BLOCKED_HOSTELS = {}
 
 
 def get_verified_application(user):
