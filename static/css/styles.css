@@ -1,0 +1,196 @@
+/* Custom styles for Aaharam application */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8fafc !important; /* Soft slate-50 background */
+    color: #334155; /* slate-700 body text */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+main.container {
+    flex: 1 0 auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Typography and Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #0f172a !important; /* slate-900 */
+    font-weight: 600 !important;
+}
+
+/* Header & Navbar */
+header {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.navbar {
+    background-color: #ffffff !important;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #0f172a !important;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+    border-bottom: 1px solid #e2e8f0 !important;
+    background-color: #ffffff !important;
+}
+
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
+}
+
+.nav-tabs .nav-link {
+    border: none !important;
+    color: #64748b !important;
+    font-weight: 500 !important;
+    padding: 0.75rem 1rem !important;
+    border-bottom: 2px solid transparent !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #0f172a !important;
+}
+
+.nav-tabs .nav-link.active {
+    color: #0f172a !important;
+    background: transparent !important;
+    border-bottom: 2px solid #0f172a !important;
+    font-weight: 600 !important;
+}
+
+/* Cards & Content blocks */
+.bg-white {
+    background-color: #ffffff !important;
+}
+
+.rounded {
+    border-radius: 6px !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid #e2e8f0;
+}
+
+/* Buttons */
+.btn {
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.75rem !important;
+    font-size: 0.875rem !important;
+}
+
+.btn-primary, .btn-success {
+    background-color: #0f172a !important;
+    border-color: #0f172a !important;
+    color: #ffffff !important;
+}
+
+.btn-primary:hover, .btn-success:hover,
+.btn-primary:focus, .btn-success:focus {
+    background-color: #1e293b !important;
+    border-color: #1e293b !important;
+    color: #ffffff !important;
+}
+
+.btn-danger {
+    background-color: #ef4444 !important;
+    border-color: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+.btn-danger:hover, .btn-danger:focus {
+    background-color: #dc2626 !important;
+    border-color: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+.btn-outline-primary {
+    color: #0f172a !important;
+    border-color: #0f172a !important;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus {
+    color: #ffffff !important;
+    background-color: #0f172a !important;
+    border-color: #0f172a !important;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    color: #0f172a !important;
+    font-size: 0.95rem !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #64748b !important;
+    box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.1) !important;
+}
+
+/* Tables */
+.table {
+    border-color: #e2e8f0 !important;
+    margin-top: 1rem !important;
+    font-size: 0.95rem;
+}
+
+.table th {
+    background-color: #f8fafc !important;
+    color: #475569 !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+}
+
+.table td {
+    color: #334155 !important;
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8fafc !important;
+}
+
+/* Badges */
+.badge {
+    padding: 0.35em 0.65em !important;
+    font-weight: 600 !important;
+    border-radius: 4px !important;
+}
+
+.badge.bg-success {
+    background-color: #10b981 !important;
+    color: #ffffff !important;
+}
+
+.badge.bg-danger {
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+.badge.bg-primary {
+    background-color: #3b82f6 !important;
+    color: #ffffff !important;
+}
+
+/* Custom spacing/paddings overrides */
+.py-3.py-md-5 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+}

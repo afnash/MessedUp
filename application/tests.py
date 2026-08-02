@@ -23,7 +23,14 @@ class HostelPaymentBlockMiddlewareTests(TestCase):
         super().tearDownClass()
 
     def setUp(self):
+        from application import access
+        self.original_blocked_hostels = access.PAYMENT_BLOCKED_HOSTELS
+        access.PAYMENT_BLOCKED_HOSTELS = {"sahara"}
         self.department = Department.objects.create(name="CSE")
+
+    def tearDown(self):
+        from application import access
+        access.PAYMENT_BLOCKED_HOSTELS = self.original_blocked_hostels
 
     def create_user_with_application(self, username, hostel_name, hostel_code):
         mess_sec = User.objects.create_user(

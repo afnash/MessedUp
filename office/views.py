@@ -2,7 +2,7 @@ from django.shortcuts import render
 import csv
 import logging
 import smtplib
-from datetime import datetime as dt
+from datetime import datetime as dt, date
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template import loader
 from django.utils.html import strip_tags
@@ -16,7 +16,7 @@ from mess.models import MessAttendance
 from mess.views import send_html_email
 from .models import *
 from mess.forms import *
-from application.models import Application
+from application.models import Application, Hostel
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -37,6 +37,13 @@ import json
 # Create your views here.
 
 
+def get_admin_hostel(user):
+    hostel = Hostel.objects.filter(mess_sec=user).first()
+    if not hostel:
+        hostel = Hostel.objects.first()
+    return hostel
+
+
 @staff_member_required
 def attendance_details_admin(request):
     today = date.today()
@@ -47,9 +54,7 @@ def attendance_details_admin(request):
             return HttpResponse("Invalid date format")
     context = {}
 
-    hostel = (
-        Application.objects.filter(applicant=request.user, accepted=True).first().hostel
-    )
+    hostel = get_admin_hostel(request.user)
     attendance_today = MessAttendance.objects.filter(
         timestamp__day=today.day,
         timestamp__month=today.month,
@@ -69,14 +74,9 @@ def attendance_details_admin(request):
 
 @staff_member_required
 def mess_bill_admin(request):
-    try:
-        hostel = (
-            Application.objects.filter(applicant=request.user, accepted=True)
-            .first()
-            .hostel
-        )
-        messsettings = Messsettings.objects.filter(hostel=hostel).first()
-    except Messsettings.DoesNotExist:
+    hostel = get_admin_hostel(request.user)
+    messsettings = Messsettings.objects.filter(hostel=hostel).first()
+    if not messsettings:
         # Handle case where no Messsettings instance exists
         return HttpResponse("Error: Messsettings instance not found")
 
@@ -98,14 +98,9 @@ def mess_bill_admin(request):
 
 @staff_member_required
 def view_mess_bill_admin(request):
-    try:
-        hostel = (
-            Application.objects.filter(applicant=request.user, accepted=True)
-            .first()
-            .hostel
-        )
-        messsettings = Messsettings.objects.filter(hostel=hostel).first()
-    except Messsettings.DoesNotExist:
+    hostel = get_admin_hostel(request.user)
+    messsettings = Messsettings.objects.filter(hostel=hostel).first()
+    if not messsettings:
         # Handle case where no Messsettings instance exists
         return HttpResponse("Error: Messsettings instance not found")
 
@@ -141,14 +136,9 @@ def view_mess_bill_admin(request):
 
 @staff_member_required
 def download_mess_bill_admin(request):
-    try:
-        hostel = (
-            Application.objects.filter(applicant=request.user, accepted=True)
-            .first()
-            .hostel
-        )
-        messsettings = Messsettings.objects.filter(hostel=hostel).first()
-    except Messsettings.DoesNotExist:
+    hostel = get_admin_hostel(request.user)
+    messsettings = Messsettings.objects.filter(hostel=hostel).first()
+    if not messsettings:
         # Handle case where no Messsettings instance exists
         return HttpResponse("Error: Messsettings instance not found")
 
@@ -234,9 +224,7 @@ def download_mess_bill_admin(request):
 @staff_member_required
 def messcut_details_admin(request):
     today = date.today()
-    hostel = (
-        Application.objects.filter(applicant=request.user, accepted=True).first().hostel
-    )
+    hostel = get_admin_hostel(request.user)
     if request.method == "POST":
         try:
             today = dt.strptime(request.POST.get("date"), "%Y-%m-%d").date()
@@ -284,9 +272,7 @@ def messcut_details_admin(request):
 @staff_member_required
 def attendance_cut_details_admin(request):
     today = date.today()
-    hostel = (
-        Application.objects.filter(applicant=request.user, accepted=True).first().hostel
-    )
+    hostel = get_admin_hostel(request.user)
 
     if request.method == "POST":
         try:
@@ -423,15 +409,9 @@ def calculate_mess_bill(hostel):
 
 
 def send_mess_bill_mail_admin(request):
-    try:
-        # Assume there is only one Messsettings instance
-        hostel = (
-            Application.objects.filter(applicant=request.user, accepted=True)
-            .first()
-            .hostel
-        )
-        messsettings = Messsettings.objects.filter(hostel=hostel).first()
-    except Messsettings.DoesNotExist:
+    hostel = get_admin_hostel(request.user)
+    messsettings = Messsettings.objects.filter(hostel=hostel).first()
+    if not messsettings:
         # Handle case where no Messsettings instance exists
         return HttpResponse("Error: Messsettings instance not found")
 
@@ -474,11 +454,7 @@ def individual_attendance(request):
     if request.method == "POST":
         context = {}
         mess_no = request.POST.get("mess_no")
-        hostel = (
-            Application.objects.filter(applicant=request.user, accepted=True)
-            .first()
-            .hostel
-        )
+        hostel = get_admin_hostel(request.user)
         mess_no = f"{hostel.code}-{mess_no}"
         date_of_attendance = request.POST.get("date_of_attendance")
         year_of_attendance = date_of_attendance.split("-")[0]
@@ -513,11 +489,7 @@ def individual_messcut(request):
     if request.method == "POST":
         mess_no = request.POST.get("mess_no")
         date_of_attendance = request.POST.get("date_of_attendance")
-        hostel = (
-            Application.objects.filter(applicant=request.user, accepted=True)
-            .first()
-            .hostel
-        )
+        hostel = get_admin_hostel(request.user)
         mess_no = f"{hostel.code}-{mess_no}"
 
         if date_of_attendance:
@@ -557,11 +529,7 @@ def total_messcuts(request):
 
     if request.method == "POST":
         date_of_attendance = request.POST.get("date_of_attendance")
-        hostel = (
-            Application.objects.filter(applicant=request.user, accepted=True)
-            .first()
-            .hostel
-        )
+        hostel = get_admin_hostel(request.user)
 
         if date_of_attendance:
             year_of_attendance = int(date_of_attendance.split("-")[0])
